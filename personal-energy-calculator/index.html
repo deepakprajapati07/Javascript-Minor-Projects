@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Personal Energy Calculator</title>
+  <link rel="icon" type="image/x-icon" href="/images/title-icon.svg">
+</head>
+
+<body>
+  <!-- Title -->
+  <section class="title-container common">
+    <h1 id="title">Personal Energy Consumption & CO<sub>2</sub> Emission Calculator</h1>
+  </section>
+
+  <!-- Initial Input -->
+  <section id="initial-inputs" class="common displayFlex">
+    <label for="family-members">Total No. of Members in Family</label>
+    <input type="number" id="family-members" name="family-members">
+  </section>
+
+  <!-- Input -->
+  <div class="forms common">
+    <!-- Household -->
+    <section class="household-container">
+      <h2>A. Household</h2>
+
+      <div class="direct-energy">
+        <h3 class="title">Direct Energy</h3>
+
+        <div class="inputBlock">
+          <div class="inputContainer">
+            <label for="area-heated">Residence - Area Heated (in m<sup>2</sup>)</label>
+            <input type="number" id="area-heated" name="area-heated">
+          </div>
+
+          <div class="inputContainer">
+            <label for="area-cooled">Residence - Area Air Conditioned (in m<sup>2</sup>)</label>
+            <input type="number" id="area-cooled" name="area-cooled">
+          </div>
+
+          <div class="inputContainer">
+            <label for="electricity-area">Residence - Electricity (in m<sup>2</sup>)</label>
+            <input type="number" id="electricity-area" name="electricity-area">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="indirect-energy">
+        <h3 class="title">Indirect Energy</h3>
+        
+        <div class="inputBlock">
+          <div class="inputContainer">
+            <label for="area-used">Residence - Total Area Used (in m<sup>2</sup>)</label>
+            <input type="number" id="area-used" name="area-used">
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Mobility -->
+    <section class="mobility-container">
+      <!-- ... (rest of the mobility section) -->
+
+      <h2>B. Mobility</h2>
+
+      <h3>Personal</h3>
+      <div class="use-mode">
+        <div class="direct-energy">
+          <h3 class="title">Direct Energy</h3>
+          <div class="inputBlock">
+            <div class="inputContainer">
+              <label for="fuel-used">Fuel Used Per Year (in litres)</label>
+              <input type="number" id="fuel-used" name="fuel-used" />
+            </div>
+          </div>
+        </div>
+
+        <div class="indirect-energy">
+          <h3 class="title">Indirect Energy</h3>
+
+          <div class="inputBlock">
+            <div class="inputContainer">
+              <label for="distance-travelled">Distance Travelled Per Year (in km)</label>
+              <input type="number" id="distance-travelled" name="distance-travelled" />
+            </div>
+            <div class="inputContainer">
+              <label for="vehicle-weight">Vehicle Weight (in kg)</label>
+              <input type="number" id="vehicle-weight" name="vehicle-weight" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 3.5rem;">Public</h3>
+      <div class="use-mode direct-energy">
+        <div class="inputBlock">
+
+            <div class="inputContainer"> 
+              <label for="train-distance-travelled">Distance Travelled By Train Per Year (in km)</label>
+              <input type="number" id="train-distance-travelled" name="train-distance-travelled" />
+            </div>
+
+            <div class="inputContainer"> 
+              <label for="bus-distance-travelled">Distance Travelled By Bus Per Year (in km)</label>
+              <input type="number" id="bus-distance-travelled" name="bus-distance-travelled" />
+            </div>
+
+            <div class="inputContainer"> 
+              <label for="aircraft-time-travelled">Time Travelled By Aircraft Per Year (in hours)</label>
+              <input type="number" id="aircraft-time-travelled" name="aircraft-time-travelled" />
+            </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Nutrition -->
+    <section id="nutrition">
+      <!-- ... (rest of the nutrition section) -->
+      <h2>C. Nutrition Consumption</h2>
+      
+      
+      <h4>Choose Any One From The Following</h4>
+
+        <div class="radioContainer inputBlock direct-energy">
+          <div class="inputContainer">
+            <input type="radio" id="vegan" name="nutrition-type" value="VEGAN" />
+            <label for="html">Vegan</label>
+          </div>
+
+          <div class="inputContainer">
+            <input type="radio" id="vegetarian" name="nutrition-type" value="VEGETARIAN" />
+            <label for="css">Vegetarian</label>
+          </div>
+
+          <div class="inputContainer">
+            <input type="radio" id="non-vegetarian" name="nutrition-type" value="NON-VEGETARIAN" />
+            <label for="javascript">Non-Vegetarian</label>
+          </div>
+
+      </div>
+
+    </section>
+
+    <!-- Private Consumption -->
+    <section id="private">
+      <!-- ... (rest of the private consumption section) -->
+
+      <div class="private-container">
+        <h2>D. Private Consumption</h2>
+
+        <div class="private-consumption direct-energy">
+
+          <div class="inputBlock">
+
+            <div class="inputContainer">
+              <label for="clothing">Value of Clothes, Shoes etc. Purchased Per Year (in US $)</label>
+              <input type="number" id="clothing" name="clothing" />
+            </div>
+
+            <div class="inputContainer">
+              <label for="computer-use">Computer and Internet Use Per Year (in hours)</label>
+              <input type="number" id="computer-use" name="computer-use" />
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Public Consumption -->
+    <section id="public">
+      <!-- ... (rest of the public consumption section) -->
+
+      <div class="public-container">
+        <h2>E. Public Consumption</h2>
+
+        <div class="inputBlock direct-energy">
+          <div class="public-consumption inputContainer">
+            <label for="public-use">Enter any approximate value (1,000 - 10,000 kWh/year)</label>
+            <input type="number" id="public-use" name="public-use" />
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+  </div>
+
+  <!-- Submit Button -->
+  <section id="submit" class="common">
+      <h3>Submit Your Details</h3>
+      <button type="button" class="form-btn" id="submit-button">Submit</button>
+  </section>
+
+  <!-- Total Consumption -->
+  <section id="total-consumption" class="common">
+
+    <h2>Result Section</h2>
+
+    <div class="direct-energy resultContainer">
+
+      <div>
+        <p>Task</p>
+        <span>Consumption</span>
+        <p>Unit</p>
+      </div>
+
+      <div>
+        <p>Total Household Energy Consumption</p>
+        <span id="total-household-consumption"></span>
+        <p>kWh/year</p>
+      </div>
+
+      <div>
+        <p>Total Mobility Energy Consumption</p>
+        <span id="total-mobility-consumption"></span>
+        <p>kWh/year</p>
+      </div>
+
+      <div>
+        <p>Total Nutrition Energy Consumption</p>
+        <span id="total-nutrition-consumption"></span>
+        <p>kWh/year</p>
+      </div>
+
+      <div>
+        <p>Total Private Energy Consumption</p>
+        <span id="total-private-consumption"></span>
+        <p>kWh/year</p>
+      </div>
+
+      <div>
+        <p>Total Public Energy Consumption</p>
+        <span id="total-public-consumption"></span>
+        <p>kWh/year</p>
+      </div>
+
+      <div class="result">
+        <p>Grand Total Consumption (A+B+C+D+E)</p>
+        <span id="grand-total-consumption"></span>
+        <p>kWh/year</p>
+      </div>
+
+      <div class="result">
+        <p>CO<sub>2</sub> Emissions Estimate</p>
+        <span id="co2-emissions-estimate"></span>
+        <p>Kg/year</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Conclusion Note Section -->
+  <section id="conclusion-note" class="common ">
+    <div class="conclusion-note">
+      <h2>Conclusion Note</h2>
+      <p class="direct-energy"><span id="conclusion"></span></p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" id="contact">
+    <!-- ... (rest of the footer section) -->
+    <!--Contact Me-->
+    <div class="contact-me">
+      <h3>Made with love</h3>
+
+      <div class="social-media">
+        <a href="mailto: deepakpk756@gmail.com" class="icon" target="_blank"><img src="images/email.svg" alt="Email" />
+        </a>
+
+        <a href="https://www.linkedin.com/in/deepakprajapati07" class="icon" target="_blank"><img
+            src="images/linkedin.svg" alt="LinkedIn" /></a>
+
+        <a href="https://github.com/deepakprajapati07" class="icon" target="_blank"><img src="images/github.svg"
+            alt="GitHub" /></a>
+
+      </div>
+
+    </div>
+
+    <!--Copyright-->
+    <div class="copyright">
+      <p>&copy; DKP 2023</p>
+    </div>
+
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+</body>
+
+</html>
