@@ -1,0 +1,111 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: border-box;
+}
+
+/*
+    color pallete
+    1. F5E6E8
+    2. D5C6E0
+    3. AAA1C8
+    4. 967AA1
+    5. 192A51
+*/
+
+body {
+    background-color: #AAA1C8;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 90vh;
+}
+
+h1 {
+    margin: 50px 10px 25px;
+    color: #192A51;
+    font-size: 50px;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;
+}
+
+input {
+    padding: 10px;
+    border: none;
+    width: 300px;
+    height: 30px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+input:hover{
+    border: 2px solid red;
+}
+
+.input:focus {
+    border: 2px solid red;
+}
+
+.peopleInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.container {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;
+}
+
+.btnConatiner {
+    margin: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.reset {
+    width: 90%;
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    background-color: #192A51;
+    color: white;
+    height: 50px;
+    width: 200px;
+    border: 2px solid white;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+button:hover {
+    scale: 1.08;
+}
+
+#go {
+    margin: 30px;
+}
+
+footer {
+    margin-top: auto;
+    padding: 10px;
+    text-align: center;
+    color: #3c3c3c;
+}
