@@ -106,7 +106,7 @@ const checkWinner = () => {
     if (innings > 1) {
         if (runLeftValue <= 0) {
             gameOverBtns();
-            remainingRunContainer.innerText = `${activeTeam.name} won the match by ${TOTAL_WICKET - activeTeam.wicket} wickets and ${TOTAL_OVER - activeTeam.overCount} overs remaining`;
+            remainingRunContainer.innerText = `${activeTeam.name} won the match by ${TOTAL_WICKET - activeTeam.wicket} wickets and ${(TOTAL_OVER - activeTeam.overCount).toFixed(1)} overs remaining`;
             gameOver.style.display = "block";
             gameOver.innerText = `Congratulations ${activeTeam.name}!`;
             restart.style.display = "block";
