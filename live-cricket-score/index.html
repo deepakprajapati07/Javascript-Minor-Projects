@@ -33,12 +33,38 @@
 
         <div class="otherDetails teamDetails">
             <h2>Enter Other Details</h2>
-            <div class="player team">
+            <div class="player team playerOverContainer">
+                <label for="playersCount"> Total Players</label>
                 <input type="text" id="playersCount" name="players" placeholder="Enter No. of Players">
             </div>
-            <div class="overs team">
+            <div class="overs team playerOverContainer">
+                <label for="oversCount">Total Overs</label>
                 <input type="text" id="oversCount" name="overs" placeholder="Enter No. of Overs">
             </div>
+
+            <div class="extraDetails">
+                <div class="runSettings">
+                    <h3>Runs for wide ball</h3>
+                    <label>
+                        <input type="radio" name="wideBall" value="1"> Yes
+                    </label>
+                    
+                    <label>
+                        <input type="radio" name="wideBall" value="0"> No
+                    </label>
+                </div>
+                <div class="runSettings">
+                    <h3>Runs for no ball</h3>
+                    <label>
+                        <input type="radio" name="noBall" value="1"> Yes
+                    </label>
+                    
+                    <label>
+                        <input type="radio" name="noBall" value="0"> No
+                    </label>
+                </div>
+            </div>
+
         </div>
     
         <div class="playBtn btn">
@@ -131,8 +157,6 @@
         <div class="addScore">
             <input type="text" id="extra" name="Ex">
             <button id="extraBtn">Extra</button>
-            <input type="text" id="manualScore">
-            <button id="addManualScore">Run</button>
         </div>
 
         <div class="inningsControlBtn">
@@ -144,7 +168,6 @@
 
     <!-- Footer  -->
     <footer>&copy; Deepak Prajapati</footer>
-
 
     <script src="./app.js"></script>
 </body>
