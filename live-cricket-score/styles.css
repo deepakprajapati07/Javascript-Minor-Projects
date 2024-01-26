@@ -4,15 +4,6 @@
     border: border-box;
 }
 
-/*
-    Color Palette
-    4E0250
-    801A86
-    645986
-    8FE388
-    58BC82
-*/
-
 body {
     background-color: #645986 ;
     min-height: 100vh;
@@ -43,7 +34,6 @@ h1 {
     justify-content: center;
     align-items: center;
 }
-
 
 /* Main Contaier  */
 
@@ -88,6 +78,7 @@ h1 {
     padding: 5px 10px;
     background-color: transparent;
     color: white;
+    font-size: 1.3rem;
 }
 
 .team input::placeholder {
@@ -104,8 +95,67 @@ h1 {
     margin-top: 10px;
 }
 
-.btn {
-    margin-top: 20px;
+.playerOverContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.playerOverContainer label {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.playerOverContainer input {
+    width: 150px;
+    height: 30px;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 5px 10px;
+    background-color: transparent;
+    color: white;
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+.extraDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.runSettings {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.runSettings h3 {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.runSettings label {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 500;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.runSettings input {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
 }
 
 button {
@@ -156,7 +206,6 @@ button {
     color: white;
     cursor: pointer;
 }
-
 
 /* Batting Bowling Options  */
 .optionContainer {
