@@ -21,6 +21,8 @@ let teamB = {
 let TOTAL_OVER;
 let TOTAL_WICKET;
 const BALLS_PER_OVER = 6;
+let wideBallRun;
+let noBallRun;
 
 let winner;
 let currentOver = [];
@@ -36,12 +38,12 @@ let runLeftValue;
 
 // HTML Elements Access
 let playBtn = document.querySelector("#playBtn");
-let inningsSpan = document.querySelector("#innings")
+let inningsSpan = document.querySelector("#innings");
 let tossContainer = document.querySelector(".tossContainer");
 let optionContainer = document.querySelector(".optionContainer");
-let inningsContainer = document.querySelector(".inningsContainer")
-let teamABtn = document.querySelector("#teamABtn")
-let teamBBtn = document.querySelector("#teamBBtn")
+let inningsContainer = document.querySelector(".inningsContainer");
+let teamABtn = document.querySelector("#teamABtn");
+let teamBBtn = document.querySelector("#teamBBtn");
 let gameOver = document.querySelector("#gameOver");
 let restart = document.querySelector("#restart");
 let targetRun = document.querySelector("#targetRun");
@@ -69,8 +71,6 @@ const noBallBtn = document.querySelector("#nb");
 const wicketBtn = document.querySelector("#wkt");
 const extra = document.querySelector("#extra");
 const extraBtn = document.querySelector("#extraBtn");
-const manualScore = document.querySelector("#manualScore");
-const addManualScore = document.querySelector("#addManualScore");
 const nextInnings = document.querySelector("#nextInnings");
 
 // Array of all the score buttons
@@ -86,7 +86,6 @@ const gameOverBtns = () => {
     noBallBtn.disabled = true;
     wicketBtn.disabled = true;
     extraBtn.disabled = true;
-    addManualScore.disabled = true;
 };
 
 // Enable property of the score buttons
@@ -98,7 +97,6 @@ const reverseBtns = () => {
     noBallBtn.disabled = false;
     wicketBtn.disabled = false;
     extraBtn.disabled = false;
-    addManualScore.disabled = false;
 };
 
 // check if the game is over or not after each ball is bowled during the 2nd innings
@@ -160,6 +158,10 @@ const updateCurrOver = (team, value) => {
     team.overCount = Math.floor(team.overCount) + ballCount / 10;
     TotalOver.innerText = team.overCount.toFixed(1);
 
+    if (innings === 1 && team.overCount === TOTAL_OVER) {
+        nextInnings.style.display = "block";
+    }
+
     if (innings === 2 && team.overCount === TOTAL_OVER) {
         checkWinner();
     }
@@ -190,6 +192,11 @@ const updateScore = (team, value) => {
 const updateWicket = (team) => {
     team.wicket += 1;
     TotalWicket.innerText = team.wicket;
+
+    if (innings == 1 && team.wicket === TOTAL_WICKET) {
+        nextInnings.style.display = "block";
+    }
+
     if (innings === 2 && team.wicket === TOTAL_WICKET) {
         checkWinner();
     }
@@ -199,17 +206,25 @@ const updateWicket = (team) => {
     }
 };
 
-// Update Wide (Currently the value is set to 0);
 const updateWide = (team) => {
-    team.score += 0;
-    TotalScore.innerText = team.score;
-}
+    if (wideBallRun === 1) {
+        team.score += 1;
+        TotalScore.innerText = team.score;
+    } else {
+        team.score += 0;
+        TotalScore.innerText = team.score;
+    }
+};
 
-// Update noBall (Currently the value is set to 0);
 const updateNoBall = (team) => {
-    team.score += 0;
-    TotalScore.innerText = team.score;
-}
+    if (noBallRun === 1) {
+        team.score += 1;
+        TotalScore.innerText = team.score;
+    } else {
+        team.score += 0;
+        TotalScore.innerText = team.score;
+    }
+};
 
 // Helper function to add or remove event listeners
 const handleEventListeners = (team, action) => {
@@ -256,18 +271,6 @@ const handleEventListeners = (team, action) => {
             extra.value = "";
         }
     });
-
-    addManualScore[action]("click", () => {
-        if (team.batting && manualScore.value !== "" && !isNaN(manualScore.value)) {
-            updateScore(team, Number(manualScore.value));
-            updateCurrOver(team, [Number(manualScore.value)]);
-            manualScore.value = "";
-        }
-        else {
-            alert("Enter valid number");
-            manualScore.value = "";
-        }
-    });
 };
 
 // Game Controls
@@ -276,30 +279,26 @@ const gameControls = (team) => {
     playingTeamBtn.style.backgroundColor = "red";
     otherTeamBtn.style.backgroundColor = "#58BC82";
     handleEventListeners(team, "addEventListener");
-}
-
-// Remove Event Listeners
-const removePrevEventListeners = (team) => {
-    handleEventListeners(team, "removeEventListener");
-}
+};
 
 // Game
 const game = (activeTeam) => {
     // console.log("Game Started");
     gameControls(activeTeam);
-}
+};
 
 // Game Setup
 const gameSetUp = () => {
     const option = document.querySelector('input[name="field"]:checked');
 
     if (!option) {
-        alert("No option selected");
+        alert("Choose either Batting or Bowling");
     }
     else {
         tossContainer.style.display = "none";
         optionContainer.style.display = "none";
         inningsContainer.style.display = "block";
+        nextInnings.style.display = "none";
         // Display Team Name
         teamABtn.innerText = teamA.name;
         teamBBtn.innerText = teamB.name;
@@ -316,7 +315,7 @@ const gameSetUp = () => {
         // start the game
         game(activeTeam);
     }
-}
+};
 
 // Coin Flip
 const coinFlip = () => {
@@ -345,7 +344,7 @@ const coinFlip = () => {
             handleTossResult(teamB, teamB.name);
         }
     }, 1000);
-}
+};
 
 // Toss
 const toss = () => {
@@ -353,6 +352,8 @@ const toss = () => {
     const mainContainer = document.querySelector(".mainContainer");
     const playersCount = document.querySelector("#playersCount");
     const oversCount = document.querySelector("#oversCount");
+    const wideBall = document.querySelector('input[name="wideBall"]:checked');
+    const noBall = document.querySelector('input[name="noBall"]:checked');
 
     const tempOver = parseFloat(oversCount.value);
     TOTAL_OVER = Math.round(tempOver * 10) / 10;
@@ -367,11 +368,17 @@ const toss = () => {
         alert("Enter the name of Team A");
     } else if (teamB.name == "") {
         alert("Enter the name of Team B");
-    } else if (isNaN(TOTAL_WICKET)) {
+    } else if (isNaN(TOTAL_WICKET) || TOTAL_WICKET < 1) {
         alert("Enter valid number of players");
     } else if (isNaN(TOTAL_OVER)) {
         alert("Enter valid number of overs");
+    } else if (!wideBall) {
+        alert("Check the any one of the option for wide ball run");
+    } else if (!noBall) {
+        alert("Check the any one of the option for no ball run")
     } else {
+        wideBallRun = Number(wideBall.value);
+        noBallRun = Number(noBall.value);
         mainContainer.style.display = "none";
         tossContainer.style.display = "block";
         tossBtn.addEventListener("click", coinFlip);
