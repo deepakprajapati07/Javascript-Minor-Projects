@@ -50,6 +50,7 @@ let targetRun = document.querySelector("#targetRun");
 let runLeftContainer = document.querySelector(".runLeft");
 let runLeft = document.querySelector("#runLeft");
 let remainingRunContainer = document.querySelector("#remainingRunContainer");
+let ballRemaining = document.querySelector("#ballRemaining");
 
 // Scoreboard Display Elements
 let TotalScore = document.querySelector("#score");
@@ -75,7 +76,7 @@ const nextInnings = document.querySelector("#nextInnings");
 
 // Array of all the score buttons
 const buttons = [btn_0, btn_1, btn_2, btn_3, btn_4, btn_5, btn_6];
-let isNextInningsListenerAdded = false;
+let isEventListenersAdded = false;
 
 // Disable property of the score buttons
 const gameOverBtns = () => {
@@ -104,19 +105,19 @@ const checkWinner = () => {
     if (innings > 1) {
         if (runLeftValue <= 0) {
             gameOverBtns();
-            remainingRunContainer.innerText = `${activeTeam.name} won the match by ${TOTAL_WICKET - activeTeam.wicket} wickets and ${(TOTAL_OVER - activeTeam.overCount).toFixed(1)} overs remaining`;
+            remainingRunContainer.innerText = `${activeTeam.name} won the match by ${TOTAL_WICKET - activeTeam.wicket} wickets and ${((TOTAL_OVER * 6) - ((Math.floor(activeTeam.overCount) * 6) + ballCount + 1))} balls remaining`;
             gameOver.style.display = "block";
             gameOver.innerText = `Congratulations ${activeTeam.name}!`;
             restart.style.display = "block";
         } else if (activeTeam.wicket === TOTAL_WICKET) {
             gameOverBtns();
-            remainingRunContainer.innerText = `${bowlingTeam.name} won the match by ${runLeftValue} runs`;
+            remainingRunContainer.innerText = `${bowlingTeam.name} won the match by ${runLeftValue - 1} runs`;
             gameOver.style.display = "block";
             gameOver.innerText = `Congratulations ${bowlingTeam.name}!`;
             restart.style.display = "block";
         } else if (activeTeam.overCount === TOTAL_OVER) {
             gameOverBtns();
-            remainingRunContainer.innerText = `${bowlingTeam.name} won the match by ${runLeftValue} runs`;
+            remainingRunContainer.innerText = `${bowlingTeam.name} won the match by ${runLeftValue - 1} runs`;
             gameOver.style.display = "block";
             gameOver.innerText = `Congratulations ${bowlingTeam.name}!`;
             restart.style.display = "block";
@@ -157,6 +158,10 @@ const updateCurrOver = (team, value) => {
     }
     team.overCount = Math.floor(team.overCount) + ballCount / 10;
     TotalOver.innerText = team.overCount.toFixed(1);
+
+    if (innings === 2) {
+        ballRemaining.innerText =((TOTAL_OVER * 6) - ((Math.floor(team.overCount) * 6) + ballCount));
+    }
 
     if (innings === 1 && team.overCount === TOTAL_OVER) {
         nextInnings.style.display = "block";
@@ -208,69 +213,86 @@ const updateWicket = (team) => {
 
 const updateWide = (team) => {
     if (wideBallRun === 1) {
-        team.score += 1;
-        TotalScore.innerText = team.score;
+        updateScore(team, 1);
     } else {
-        team.score += 0;
-        TotalScore.innerText = team.score;
+        updateScore(team, 0);
     }
 };
 
 const updateNoBall = (team) => {
     if (noBallRun === 1) {
-        team.score += 1;
-        TotalScore.innerText = team.score;
+        updateScore(team, 1);
     } else {
         team.score += 0;
-        TotalScore.innerText = team.score;
+        updateScore(team, 0);
     }
 };
 
 // Helper function to add or remove event listeners
 const handleEventListeners = (team, action) => {
-    
+    // Clear existing event listeners
+    removeAllEventListeners();
+
     buttons.forEach((button) => {
-        button[action]("click", () => {
-            // Add listeners only for the active batting team
-            if (team.batting) {  
-                updateScore(team, Number(button.value));
-                updateCurrOver(team, [Number(button.value)]);
-            }
-        });
+        button[action]("click", buttonClickHandler);
     });
 
-    wideBtn[action]("click", () => {
-        if (team.batting) {
-            updateWide(team);
-            updateCurrOver(team, [wideBtn.value]);
-        }
-    });
+    wideBtn[action]("click", wideBtnClickHandler);
+    noBallBtn[action]("click", noBallBtnClickHandler);
+    wicketBtn[action]("click", wicketBtnClickHandler);
+    extraBtn[action]("click", extraBtnClickHandler);
+};
 
-    noBallBtn[action]("click", () => {
-        if (team.batting) {
-            updateNoBall(team);
-            updateCurrOver(team, [noBallBtn.value]);
-        }
+// Function to remove all event listeners
+const removeAllEventListeners = () => {
+    buttons.forEach((button) => {
+        button.removeEventListener("click", buttonClickHandler);
     });
+    wideBtn.removeEventListener("click", wideBtnClickHandler);
+    noBallBtn.removeEventListener("click", noBallBtnClickHandler);
+    wicketBtn.removeEventListener("click", wicketBtnClickHandler);
+    extraBtn.removeEventListener("click", extraBtnClickHandler);
+};
 
-    wicketBtn[action]("click", () => {
-        if (team.batting) {
-            updateWicket(team);
-            updateCurrOver(team, [wicketBtn.value]);
-        }
-    });
+// Event handlers
+const buttonClickHandler = () => {
+    // Add listeners only for the active batting team
+    if (activeTeam.batting) {
+        updateScore(activeTeam, Number(event.target.value));
+        updateCurrOver(activeTeam, [Number(event.target.value)]);
+    }
+};
 
-    extraBtn[action]("click", () => {
-        if (team.batting && extra.value !== "" && !isNaN(extra.value)) {
-            updateScore(team, Number(extra.value));
-            updateCurrOver(team, [Number(extra.value), extra.name]);
-            extra.value = "";
-        }
-        else {
-            alert("Enter valid number");
-            extra.value = "";
-        }
-    });
+const wideBtnClickHandler = () => {
+    if (activeTeam.batting) {
+        updateWide(activeTeam);
+        updateCurrOver(activeTeam, [wideBtn.value]);
+    }
+};
+
+const noBallBtnClickHandler = () => {
+    if (activeTeam.batting) {
+        updateNoBall(activeTeam);
+        updateCurrOver(activeTeam, [noBallBtn.value]);
+    }
+};
+
+const wicketBtnClickHandler = () => {
+    if (activeTeam.batting) {
+        updateWicket(activeTeam);
+        updateCurrOver(activeTeam, [wicketBtn.value]);
+    }
+};
+
+const extraBtnClickHandler = () => {
+    if (activeTeam.batting && extra.value !== "" && !isNaN(extra.value)) {
+        updateScore(activeTeam, Number(extra.value));
+        updateCurrOver(activeTeam, [Number(extra.value), extra.name]);
+        extra.value = "";
+    } else {
+        alert("Enter valid number");
+        extra.value = "";
+    }
 };
 
 // Game Controls
@@ -278,13 +300,12 @@ const gameControls = (team) => {
     let [playingTeamBtn, otherTeamBtn] = team == teamA ? [teamABtn, teamBBtn] : [teamBBtn, teamABtn];
     playingTeamBtn.style.backgroundColor = "red";
     otherTeamBtn.style.backgroundColor = "#58BC82";
-    handleEventListeners(team, "addEventListener");
-};
 
-// Game
-const game = (activeTeam) => {
-    // console.log("Game Started");
-    gameControls(activeTeam);
+    // Check if event listeners are not already added
+    if (!isEventListenersAdded) {
+        handleEventListeners(team, "addEventListener");
+        isEventListenersAdded = true; // Set the flag to true after adding listeners
+    }
 };
 
 // Game Setup
@@ -313,7 +334,7 @@ const gameSetUp = () => {
         battingTeam.batting = true;
 
         // start the game
-        game(activeTeam);
+        gameControls(activeTeam);
     }
 };
 
@@ -401,6 +422,7 @@ nextInnings.addEventListener("click", () => {
     targetRun.innerText = targetRunValue;
     runLeftValue = targetRunValue - bowlingTeam.score;
     runLeft.innerText = runLeftValue;
+    ballRemaining.innerText = TOTAL_OVER * 6;
 
     // Reset the values
     TotalScore.innerText = bowlingTeam.score;
@@ -409,6 +431,12 @@ nextInnings.addEventListener("click", () => {
     currOverCount.innerText = currentOver;
     prevOverCount.innerText = previousOvers;
     ballCount = 0;
+
+    // Remove all the event listeners
+    removeAllEventListeners();
+
+    // Reset the flag to false
+    isEventListenersAdded = false;
 
     // Swap the teams
     battingTeam.batting = false;
