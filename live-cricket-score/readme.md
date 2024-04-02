@@ -1,2 +1,2 @@
 ## Project Deployed Link
-cricketscoretracker.vercel.app
+[Click Here](cricketscoretracker.vercel.app)
