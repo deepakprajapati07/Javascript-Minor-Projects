@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="./images/cricket.svg" />
+    <link rel="stylesheet" href="./styles.css">
+    <title>Live Cricket Score</title>
+</head>
+<body>
+
+    <!-- Heading  -->
+    <div class="headingContainer">
+        <h1>Live Cricket Score</h1>
+    </div>
+
+    <!-- Main Container  -->
+
+    <div class="mainContainer">
+        <div class="teamDetails">
+            <h2>Enter Team Details</h2>
+    
+            <div class="team">
+                <label for="teamA">Team A</label>
+                <input type="text" id="teamA" name="teamA" placeholder="Team Name">
+            </div>
+    
+            <div class="team">
+                <label for="teamB">Team B</label>
+                <input type="text" id="teamB" name="teamB" placeholder="Team Name">
+            </div>
+        </div>
+
+        <div class="otherDetails teamDetails">
+            <h2>Enter Other Details</h2>
+            <div class="player team playerOverContainer">
+                <label for="playersCount"> Total Players</label>
+                <input type="text" id="playersCount" name="players" placeholder="Enter No. of Players">
+            </div>
+            <div class="overs team playerOverContainer">
+                <label for="oversCount">Total Overs</label>
+                <input type="text" id="oversCount" name="overs" placeholder="Enter No. of Overs">
+            </div>
+
+            <div class="extraDetails">
+                <div class="runSettings">
+                    <h3>Runs for wide ball</h3>
+                    <label>
+                        <input type="radio" name="wideBall" value="1"> Yes
+                    </label>
+                    
+                    <label>
+                        <input type="radio" name="wideBall" value="0"> No
+                    </label>
+                </div>
+                <div class="runSettings">
+                    <h3>Runs for no ball</h3>
+                    <label>
+                        <input type="radio" name="noBall" value="1"> Yes
+                    </label>
+                    
+                    <label>
+                        <input type="radio" name="noBall" value="0"> No
+                    </label>
+                </div>
+            </div>
+
+        </div>
+    
+        <div class="playBtn btn">
+            <button id="playBtn">Let's Play</button>
+        </div>
+    </div>
+
+    <!-- Toss Container  -->
+    <div class="tossContainer">
+        <h1>It's Toss Time!</h1>
+
+        <div class="tossWinnerContainer">
+            <span id="tossWinner"></span>
+        </div>
+
+        <div class="container">
+            <div id="coin" class="coin">Flip Me!</div>
+        </div>
+    
+        <div class="tossBtn btn">
+            <button id="tossBtn">Flip the coin!</button>
+        </div>
+    </div>
+
+    <!-- Option Container  -->
+    <div class="optionContainer">
+        <h2>What you want to choose?</h2>
+        <div class="options">
+            <label>
+                <input type="radio" name="field" value="batting"> Batting
+            </label>
+            
+            <label>
+                <input type="radio" name="field" value="bowling"> Bowling
+            </label>
+        </div>
+        <button id="startGame">Let's Start the Game!</button>
+    </div>
+    
+    <!-- Innings Container  -->
+
+    <div class="inningsContainer">
+        <h1>Inninigs <span id="innings"></span></h1>
+
+        <div class="teamContainer">
+            <span id="teamABtn"></span>
+            <span id="teamBBtn"></span>
+        </div>
+
+        <div class="runLeft">
+            <h3>Target Score: <span id="targetRun"></span></h3>
+            <h4 id="remainingRunContainer"><span id="runLeft"></span> runs more to win in <span id="ballRemaining"></span> balls</h4>
+        </div>
+
+        <div class="scoreContainer">
+            <h2>Score:
+                <span id="score">0</span> /
+                <span id="wicket">0</span>
+            </h2>
+        </div>
+
+        <div class="overContainer">
+            <h3>Total Over:
+                <span id="overCount">0</span>
+            </h3>
+        </div>
+
+        <div class="overSummary">
+            <div class="currOver">
+                Current Over: <span id="currOverSummary"></span>
+            </div>
+            <div class="allOver">
+                Last 5 Overs: <span id="allOverSummary"></span>
+            </div>
+        </div>
+
+        <div class="scoreBtnContainer">
+            <button class="scoreBtn" id="btn_0" value="0">0</button>
+            <button class="scoreBtn" id="btn_1" value="1">1</button>
+            <button class="scoreBtn" id="btn_2" value="2">2</button>
+            <button class="scoreBtn" id="btn_3" value="3">3</button>
+            <button class="scoreBtn" id="btn_4" value="4">4</button>
+            <button class="scoreBtn" id="btn_5" value="5">5</button>
+            <button class="scoreBtn" id="btn_6" value="6">6</button>
+            <button class="scoreBtn" id="wd" value="Wd">Wd</button>
+            <button class="scoreBtn" id="nb" value="Nb">NB</button>
+            <button class="wktBtn" id="wkt" value="W">Wkt</button>
+        </div>
+
+        <div class="addScore">
+            <input type="text" id="extra" name="Ex">
+            <button id="extraBtn">Extra</button>
+        </div>
+
+        <div class="inningsControlBtn">
+            <button id="nextInnings">Next Inning</button>
+            <button id="gameOver">Game Over</button>
+            <button id="restart">Restart Match</button>
+        </div>
+    </div>
+
+    <!-- Footer  -->
+    <footer>&copy; Deepak Prajapati</footer>
+
+    <script src="./app.js"></script>
+</body>
+</html>
