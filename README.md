@@ -2,4 +2,4 @@
 This repo contains minor javascript projects
 
 # Projects Deployed Links
-[Cricket Score Tracker](cricketscoretracker.vercel.app)
+Cricket Score Tracker https://cricketscoretracker.vercel.app
